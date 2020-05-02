@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30011.22
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LMS.UI.MVC", "src\LMS.UI.MVC\LMS.UI.MVC.csproj", "{C2A3A0B3-D6BC-4A90-B566-7566A4E8AB4A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LMS.DATA.EF", "src\LMS.DATA.EF\LMS.DATA.EF.csproj", "{0CF5E48F-C7C7-4DF8-9DDB-D2778712CB98}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C2A3A0B3-D6BC-4A90-B566-7566A4E8AB4A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2A3A0B3-D6BC-4A90-B566-7566A4E8AB4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2A3A0B3-D6BC-4A90-B566-7566A4E8AB4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2A3A0B3-D6BC-4A90-B566-7566A4E8AB4A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0CF5E48F-C7C7-4DF8-9DDB-D2778712CB98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0CF5E48F-C7C7-4DF8-9DDB-D2778712CB98}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0CF5E48F-C7C7-4DF8-9DDB-D2778712CB98}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0CF5E48F-C7C7-4DF8-9DDB-D2778712CB98}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {373BF97B-6335-4664-B031-0D196C382EE9}
+	EndGlobalSection
+EndGlobal
