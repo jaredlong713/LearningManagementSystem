@@ -12,9 +12,6 @@ namespace LMS.DATA.EF
 
     public class CoursMetadata
     {
-        [Display(Name = "Course")]
-        public int CourseID { get; set; }
-
         [Display(Name = "Course Name")]
         [StringLength(200, ErrorMessage = "* Maximum of 200 characters")]
         [Required(ErrorMessage = "* Course name is required")]
@@ -23,12 +20,15 @@ namespace LMS.DATA.EF
         [StringLength(500, ErrorMessage = "* Maximum of 500 characters")]
         public string Description { get; set; }
 
-        [Display(Name = "Active")]
-        public bool IsActive { get; set; }
-
         [Display(Name = "Course Image")]
         [StringLength(200, ErrorMessage = "* Maximum of 200 characters")]
-        public string Image { get; set; }
+        public string CourseImage { get; set; }
+
+        [Display(Name = "Course Time")]
+        public int CourseTime { get; set; }
+
+        [Display(Name = "Active")]
+        public bool IsActive { get; set; }
     }
 
 
@@ -37,12 +37,6 @@ namespace LMS.DATA.EF
 
     public class CourseCompletionMetadata
     {
-        public int CourseCompletionID { get; set; }
-
-        public string UserID { get; set; }
-
-        public int CourseID { get; set; }
-
         [Display(Name = "Date Completed")]
         [DisplayFormat(DataFormatString = "{0:d}")]
         public System.DateTime DateCompleted { get; set; }
@@ -55,15 +49,10 @@ namespace LMS.DATA.EF
 
     public class LessonMetadata
     {
-        public int LessonID { get; set; }
-
         [Display(Name = "Lesson")]
         [Required(ErrorMessage = "* Lesson name is required")]
         [StringLength(200, ErrorMessage = "* Maximum of 200 characters")]
         public string LessonTitle { get; set; }
-
-        [Display(Name = "Course")]
-        public int CourseID { get; set; }
 
         [Required(ErrorMessage = "* Introduction is required")]
         [StringLength(300, ErrorMessage = "* Maximum of 300 characters")]
@@ -75,7 +64,7 @@ namespace LMS.DATA.EF
 
         [Display(Name = "PDF Resource")]
         [StringLength(100, ErrorMessage = "* Maximum of 100 characters")]
-        public string PdfFileName { get; set; }
+        public string PdfFilename { get; set; }
 
         [Display(Name = "Active")]
         public bool IsActive { get; set; }
@@ -88,11 +77,6 @@ namespace LMS.DATA.EF
 
     public class LessonViewMetadata
     {
-        public int LessonViewID { get; set; }
-
-        public string UserID { get; set; }
-
-        public int LessonID { get; set; }
 
         [Display(Name = "Date Viewed")]
         [DisplayFormat(DataFormatString = "{0:d}")]
@@ -110,7 +94,6 @@ namespace LMS.DATA.EF
 
     public class UserDetailMetadata
     {
-        public string UserID { get; set; }
 
         [Display(Name = "First Name")]
         [Required(ErrorMessage = "* First Name is required")]
@@ -122,6 +105,5 @@ namespace LMS.DATA.EF
         [StringLength(50, ErrorMessage = "* Max length 50 characters")]
         public string LastName { get; set; }
     }
-
 
 }

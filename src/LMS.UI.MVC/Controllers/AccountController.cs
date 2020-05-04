@@ -2,16 +2,20 @@
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using LMS.DATA.EF;
 
 namespace LMS.UI.MVC.Controllers
 {
     [Authorize]
     public class AccountController : Controller
     {
+        private LearningManagementEntities db = new LearningManagementEntities();
+
         public AccountController()
         {
         }
@@ -151,8 +155,18 @@ namespace LMS.UI.MVC.Controllers
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
+                var aspnetUser = db.AspNetUsers.Where(a => a.Email == model.Email).FirstOrDefault();
+
                 if (result.Succeeded)
                 {
+                    UserDetail userDetail = new UserDetail();
+                    userDetail.UserId = aspnetUser.Id;
+                    userDetail.FirstName = model.Email;
+                    userDetail.LastName = "Long";
+
+                    db.UserDetails.Add(userDetail);
+                    db.SaveChanges();
+
                     var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking this link: <a href=\"" + callbackUrl + "\">link</a>");

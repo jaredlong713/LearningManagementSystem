@@ -25,6 +25,7 @@ namespace LMS.DATA.EF
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<AspNetRole> AspNetRoles { get; set; }
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
         public virtual DbSet<CourseCompletion> CourseCompletions { get; set; }
         public virtual DbSet<Course> Courses { get; set; }

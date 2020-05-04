@@ -50,6 +50,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AspNetRole.cs">
+      <DependentUpon>LMS.tt</DependentUpon>
+    </Compile>
     <Compile Include="AspNetUser.cs">
       <DependentUpon>LMS.tt</DependentUpon>
     </Compile>
@@ -87,32 +90,30 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.Config" />
     <EntityDeploy Include="LMS.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>LMS.Designer.cs</LastGenOutput>
     </EntityDeploy>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.Config" />
     <None Include="LMS.edmx.diagram">
       <DependentUpon>LMS.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="LMS.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>LMS.Context.cs</LastGenOutput>
       <DependentUpon>LMS.edmx</DependentUpon>
+      <LastGenOutput>LMS.Context.cs</LastGenOutput>
     </Content>
     <Content Include="LMS.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>LMS.edmx</DependentUpon>
       <LastGenOutput>LMS.cs</LastGenOutput>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

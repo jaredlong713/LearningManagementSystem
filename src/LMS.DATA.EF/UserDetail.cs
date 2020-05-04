@@ -29,5 +29,6 @@ namespace LMS.DATA.EF
         public virtual ICollection<CourseCompletion> CourseCompletions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<LessonView> LessonViews { get; set; }
+        public virtual AspNetUser AspNetUser { get; set; }
     }
 }
