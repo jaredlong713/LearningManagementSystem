@@ -1,0 +1,83 @@
+﻿@model IEnumerable<LMS.DATA.EF.Course>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="bradcam_area breadcam_bg overlay2">
+    <h3>Our Courses</h3>
+</div>
+<div class="popular_courses">
+    <div class="all_courses">
+        <div class="container">
+            <div class="tab-content" id="myTabContent">
+                @if (User.IsInRole("HRAdmin") || User.IsInRole("Admin"))
+                {
+                    if (ViewBag.IsActive == true)
+                    {
+
+                        <div class="row">
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                <h2>ACTIVE COURSES</h2>
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                <div class="pull-right">
+                                    <a href="@Url.Action("Index", "Courses", new RouteValueDictionary(new { isactive = "inactive" }))" class="genric-btn primary-border circle">Inactive Courses</a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="row">
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                <h2>INACTIVE COURSES</h2>
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                <div class="pull-right">
+                                    <a href="@Url.Action("Index", "Courses", new RouteValueDictionary(new { isactive = "active" }))" class="genric-btn primary-border circle">Active Courses</a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                    <p>
+
+                    </p>
+                }
+                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                    <div class="row">
+                        @foreach (var item in Model)
+                        {
+                            <div class="col-xl-4 col-lg-4 col-md-6">
+                                <div class="single_courses">
+                                    <div class="thumb">
+                                        <a href="@Url.Action("Details", "Courses", new RouteValueDictionary(new { id = item.CourseId}))">
+                                            <img src="~/Content/img/courses/@item.CourseImage" alt="">
+                                        </a>
+                                    </div>
+                                    <div class="courses_info">
+                                        <span>@item.CourseName</span>
+                                        <h3>
+                                            <a href="@Url.Action("Details", "Courses", new RouteValueDictionary(new { id = item.CourseId }))">
+                                                @item.CourseTag
+                                            </a>
+                                        </h3>
+                                    </div>
+                                    <div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+
+                        <div class="col-xl-12">
+                            <div class="more_courses text-center">
+                                <a href="@Url.Action("Create", "Courses")" class="boxed_btn_rev">CREATE NEW</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

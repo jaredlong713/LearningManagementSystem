@@ -1,0 +1,84 @@
+﻿@model LMS.DATA.EF.Course
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<div class="bradcam_area breadcam_bg overlay2">
+    <h3>@(Model.IsActive ? "Deactivate" : "Activate") Course</h3>
+</div>
+
+<div class="container">
+    <br/>
+    <h3>Are you sure you want to @(Model.IsActive ? "Deactivate" : "Activate")  this?</h3>
+    <div>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.CourseName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.CourseName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.CourseDescription)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.CourseDescription)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.CourseTag)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.CourseTag)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.CourseImage)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.CourseImage)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.CourseTime)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.CourseTime)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.IsActive)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.IsActive)
+            </dd>
+
+        </dl>
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-9 col-lg-10">
+                        <input type="submit" value="Yes" class="genric-btn danger-border circle" />
+                        <br /><br />
+                    </div>
+
+                    <div class=" col-md-3 col-lg-2">
+                        <a href="@Url.Action("Index", "Courses")" class="genric-btn info-border circle">Back to Courses</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    </div>

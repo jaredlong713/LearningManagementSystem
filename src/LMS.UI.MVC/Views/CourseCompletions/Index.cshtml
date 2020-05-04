@@ -1,0 +1,91 @@
+﻿@model IEnumerable<LMS.DATA.EF.CourseCompletion>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="bradcam_area breadcam_bg overlay2">
+    <h3>Completed Courses</h3>
+</div>
+
+<div class="container">
+
+    @if (User.IsInRole("Employee"))
+    {
+        <div class="row">
+            <div class="course-progress">
+                <br />
+                <h3> @ViewBag.NbrCompleted out of 6 courses complete!</h3>
+            </div>
+        </div>
+        <div class="percentage">
+            <div class="progress">
+                @switch (@ViewBag.NbrCompleted)
+                {
+                    case 0:
+                        <div class="progress-bar color-1" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                        break;
+                    case 1:
+                        <div class="progress-bar color-1" role="progressbar" style="width: 16.66%" aria-valuenow="16.66" aria-valuemin="0" aria-valuemax="100"></div>
+                        break;
+                    case 2:
+                        <div class="progress-bar color-1" role="progressbar" style="width: 33.32%" aria-valuenow="33.32" aria-valuemin="0" aria-valuemax="100"></div>
+                        break;
+                    case 3:
+                        <div class="progress-bar color-1" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                        break;
+                    case 4:
+                        <div class="progress-bar color-1" role="progressbar" style="width: 66.4%" aria-valuenow="66.4" aria-valuemin="0" aria-valuemax="100"></div>
+                        break;
+                    case 5:
+                        <div class="progress-bar color-1" role="progressbar" style="width: 83.3%" aria-valuenow="83.3" aria-valuemin="0" aria-valuemax="100"></div>
+                        break;
+                    case 6:
+                        <div class="progress-bar color-1" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                        break;
+
+                }
+            </div>
+        </div>
+
+    }
+    <br />
+
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.DateCompleted)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserDetail.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Course.CourseName)
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateCompleted)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserDetail.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Course.CourseName)
+                </td>
+            </tr>
+        }
+    </table>
+    @if (User.IsInRole("Admin") || User.IsInRole("HRAdmin"))
+    {
+        <div class="col-xl-12">
+            <div class="text-center">
+                <a href="@Url.Action("Create", "CourseCompletions")" class="boxed_btn_rev">CREATE NEW</a>
+            </div>
+            <br /><br />
+        </div>
+    }
+</div>

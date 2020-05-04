@@ -1,0 +1,106 @@
+﻿@model LMS.DATA.EF.Course
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<!-- bradcam_area_start -->
+<div class="courses_details_banner">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-5">
+                <div class="course_text">
+                    <h3>@Model.CourseName</h3>
+                    <h4>@Model.CourseTag</h4>
+                    <div class="hours">
+                        <div class="video">
+                            <div class="single_video">
+                                <i class="fa fa-play-circle-o"></i> <span>@Model.Lessons.Count() Lessons</span>
+                            </div>
+                            <div class="single_video">
+                                <i class="fa fa-clock-o"></i> <span>@Model.CourseTime Hours</span>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- bradcam_area_end -->
+
+<div class="courses_details_info">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-12 col-lg-12">
+                <div class="single_courses">
+                    <h3>Objectives</h3>
+                    <p>@Model.CourseDescription</p>
+                    <h3 class="second_title">Course Outline</h3>
+                </div>
+                <div class="outline_courses_info">
+                    <div id="accordion">
+                        @foreach (var item in Model.Lessons)
+                        {
+                            <div class="card">
+                                <div class="card-header" id="headingTwo">
+                                    <h5 class="mb-0">
+                                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#@item.LessonId" aria-expanded="false" aria-controls="collapseTwo">
+                                            <i class="flaticon-question"></i> @item.LessonTitle
+                                        </button>
+                                    </h5>
+                                </div>
+                                <div id="@item.LessonId" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                                    <div class="card-body">
+                                        @item.Introduction
+                                    </div>
+                                    <div class="pull-right" style="padding:10px;">
+                                        <a href="@Url.Action("Details", "Lessons", new RouteValueDictionary(new { id = item.LessonId }))" class="genric-btn info radius">View Lesson</a>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+            @if (User.IsInRole("HRAdmin") || User.IsInRole("Admin"))
+            {
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-8 col-lg-10">
+                            <a href="@Url.Action("Edit", "Courses", new RouteValueDictionary(new { id = Model.CourseId }))" class="genric-btn info circle">Edit</a>
+                            <br /><br />
+                        </div>
+                        @if (Model.IsActive)
+                        {
+                            <div class=" col-md-4 col-lg-2">
+                                <a href="@Url.Action("Delete", "Courses", new RouteValueDictionary(new { id = Model.CourseId }))" class="genric-btn primary-border circle">Make Inactive</a>
+                                <br /><br />
+                            </div>
+                        }
+                        else
+                        {
+                            <div class=" col-md-4 col-lg-2">
+                                <a href="@Url.Action("Delete", "Courses", new RouteValueDictionary(new { id = Model.CourseId }))" class="genric-btn primary-border circle">Make Active</a>
+                                <br /><br />
+                            </div>
+                        }
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <a href="@Url.Action("Create", "Lessons")" class="genric-btn info circle">Add Lesson</a>
+                            <br /><br />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-12">
+                    <div class="more_courses text-center">
+                        
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

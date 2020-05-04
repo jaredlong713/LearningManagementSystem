@@ -17,11 +17,17 @@ namespace LMS.DATA.EF
         [Required(ErrorMessage = "* Course name is required")]
         public string CourseName { get; set; }
 
+
+        [Display(Name = "Description")]
         [StringLength(500, ErrorMessage = "* Maximum of 500 characters")]
-        public string Description { get; set; }
+        public string CourseDescription { get; set; }
+
+        [Display(Name = "Tag")]
+        [StringLength(100, ErrorMessage = "* Maximum of 500 characters")]
+        public string CourseTag { get; set; }
 
         [Display(Name = "Course Image")]
-        [StringLength(200, ErrorMessage = "* Maximum of 200 characters")]
+        [StringLength(100, ErrorMessage = "* Maximum of 200 characters")]
         public string CourseImage { get; set; }
 
         [Display(Name = "Course Time")]
@@ -38,8 +44,8 @@ namespace LMS.DATA.EF
     public class CourseCompletionMetadata
     {
         [Display(Name = "Date Completed")]
-        [DisplayFormat(DataFormatString = "{0:d}")]
-        public System.DateTime DateCompleted { get; set; }
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MMM/yyyy}")]
+        public DateTime DateCompleted { get; set; }
     }
 
 

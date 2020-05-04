@@ -43,7 +43,8 @@
                                 <nav>
                                     <ul id="navigation">
                                         <li><a class="active" href="index.html">home</a></li>
-                                        <li><a href="Courses.html">Courses</a></li>
+                                        <li><a href="@Url.Action("Index", "Courses")">Courses</a></li>
+                                        <li><a href="@Url.Action("Index", "CourseCompletions")">Completed Courses</a></li>
                                         <li>
                                             <a href="#">pages <i class="ti-angle-down"></i></a>
                                             <ul class="submenu">
@@ -60,10 +61,12 @@
                                             </ul>
                                         </li>
                                         <li><a href="contact.html">Contact</a></li>
-                                        <li><a href="Courses.html">
+                                        <li>
+                                            <a href="Courses.html">
                                                 <i class="flaticon-user"></i>
                                                 <span>log in</span>
-                                            </a></li>
+                                            </a>
+                                        </li>
                                     </ul>
                                 </nav>
                             </div>

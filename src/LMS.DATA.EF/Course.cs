@@ -27,7 +27,7 @@ namespace LMS.DATA.EF
         public string CourseTag { get; set; }
         public string CourseImage { get; set; }
         public int CourseTime { get; set; }
-        public int IsActive { get; set; }
+        public bool IsActive { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CourseCompletion> CourseCompletions { get; set; }
