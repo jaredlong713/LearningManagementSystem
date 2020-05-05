@@ -4,63 +4,64 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
 
-<div>
-    <h4>Lesson</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.LessonTitle)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.LessonTitle)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Introduction)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Introduction)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.VideoURL)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.VideoURL)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.PdfFilename)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PdfFilename)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.IsActive)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.IsActive)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Course.CourseName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Course.CourseName)
-        </dd>
-
-    </dl>
+<div class="bradcam_area breadcam_bg overlay2">
+    <h3>@Model.LessonTitle</h3>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.LessonId }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+
+<div class="container">
+    <div>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Introduction)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Introduction)
+            </dd>
+        </dl>
+        <div>
+            @if (Model.VideoURL != null)
+            {
+                <dt>
+                    @Html.DisplayNameFor(model => model.VideoURL)
+                </dt>
+
+                <iframe id="ytplayer" type="text/html" width="640" height="360"
+                        src="@Model.VideoURL"
+                        frameborder="0"></iframe>
+            }
+        </div>
+        <div>
+            @if (Model.PdfFilename != null)
+            {
+                <p>
+                    <br/>
+                    <a href="~/Content/resources/@Model.PdfFilename" class="genric-btn primary-border small">
+                        Download Resource
+                    </a>
+                </p>
+            }
+        </div>
+        <hr />
+    </div>
+    @if (User.IsInRole("HRAdmin") || User.IsInRole("Admin"))
+    {
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-2">
+                    <a href="@Url.Action("Edit", "Lessons", new RouteValueDictionary(new { id = Model.LessonId }))" class="genric-btn info circle">Edit</a>
+                    <br /><br />
+                </div>
+                <div class="col-lg-8">
+                    <a href="@Url.Action("Details", "Courses", new RouteValueDictionary(new { id = Model.CourseId }))" class="genric-btn info-border circle">Back to Course</a>
+                    <br /><br />
+                </div>
+                <div class=" col-md-4 col-lg-2">
+                    <a href="@Url.Action("Delete", "Lessons", new RouteValueDictionary(new { id = Model.LessonId }))" class="genric-btn primary-border circle">Delete</a>
+                    <br /><br />
+                </div>
+            </div>
+        </div>
+    }
+</div>

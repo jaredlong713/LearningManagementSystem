@@ -43,23 +43,26 @@
                     <div id="accordion">
                         @foreach (var item in Model.Lessons)
                         {
-                            <div class="card">
-                                <div class="card-header" id="headingTwo">
-                                    <h5 class="mb-0">
-                                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#@item.LessonId" aria-expanded="false" aria-controls="collapseTwo">
-                                            <i class="flaticon-question"></i> @item.LessonTitle
-                                        </button>
-                                    </h5>
-                                </div>
-                                <div id="@item.LessonId" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
-                                    <div class="card-body">
-                                        @item.Introduction
+                            if (item.IsActive)
+                            {
+                                <div class="card">
+                                    <div class="card-header" id="headingTwo">
+                                        <h5 class="mb-0">
+                                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#@item.LessonId" aria-expanded="false" aria-controls="collapseTwo">
+                                                <i class="flaticon-question"></i> @item.LessonTitle
+                                            </button>
+                                        </h5>
                                     </div>
-                                    <div class="pull-right" style="padding:10px;">
-                                        <a href="@Url.Action("Details", "Lessons", new RouteValueDictionary(new { id = item.LessonId }))" class="genric-btn info radius">View Lesson</a>
+                                    <div id="@item.LessonId" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                                        <div class="card-body">
+                                            @item.Introduction
+                                        </div>
+                                        <div class="pull-right" style="padding:10px;">
+                                            <a href="@Url.Action("Details", "Lessons", new RouteValueDictionary(new { id = item.LessonId }))" class="genric-btn info radius">View Lesson</a>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            }
                         }
                     </div>
                 </div>

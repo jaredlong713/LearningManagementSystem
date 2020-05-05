@@ -62,7 +62,13 @@
             <th>
                 @Html.DisplayNameFor(model => model.Course.CourseName)
             </th>
-        </tr>
+            @if (User.IsInRole("Admin") || User.IsInRole("HRAdmin") || User.IsInRole("Manager"))
+            {
+                <th>
+                    Manage
+                </th>
+            }
+            </tr>
 
         @foreach (var item in Model)
         {
@@ -76,12 +82,20 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Course.CourseName)
                 </td>
+                @if (User.IsInRole("Admin") || User.IsInRole("HRAdmin") || User.IsInRole("Manager"))
+                {
+                    <th>
+                        <a href="@Url.Action("Details", "CourseCompletions", new RouteValueDictionary(new { id = item.CourseCompletionId }))" class="genric-btn primary small">
+                                Details
+                        </a>
+                    </th>
+                }
             </tr>
         }
     </table>
     @if (User.IsInRole("Admin") || User.IsInRole("HRAdmin"))
     {
-        <div class="col-xl-12">
+        <div class="col-xl-11">
             <div class="text-center">
                 <a href="@Url.Action("Create", "CourseCompletions")" class="boxed_btn_rev">CREATE NEW</a>
             </div>

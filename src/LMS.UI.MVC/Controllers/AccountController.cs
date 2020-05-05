@@ -153,23 +153,25 @@ namespace LMS.UI.MVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-                var result = await UserManager.CreateAsync(user, model.Password);
-                var aspnetUser = db.AspNetUsers.Where(a => a.Email == model.Email).FirstOrDefault();
+                var aspnetUser = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var result = await UserManager.CreateAsync(aspnetUser, model.Password);
 
                 if (result.Succeeded)
                 {
+                    //Default assign new user to employee role
+                    var roles = await UserManager.AddToRolesAsync(aspnetUser.Id, "Employee");
+
                     UserDetail userDetail = new UserDetail();
                     userDetail.UserId = aspnetUser.Id;
-                    userDetail.FirstName = model.Email;
-                    userDetail.LastName = "Long";
+                    userDetail.FirstName = model.FirstName;
+                    userDetail.LastName = model.LastName;
 
                     db.UserDetails.Add(userDetail);
                     db.SaveChanges();
 
-                    var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking this link: <a href=\"" + callbackUrl + "\">link</a>");
+                    var code = await UserManager.GenerateEmailConfirmationTokenAsync(aspnetUser.Id);
+                    var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = aspnetUser.Id, code = code }, protocol: Request.Url.Scheme);
+                    await UserManager.SendEmailAsync(aspnetUser.Id, "Confirm your account", "Please confirm your account by clicking this link: <a href=\"" + callbackUrl + "\">link</a>");
                     ViewBag.Link = callbackUrl;
                     return View("DisplayEmail");
                 }

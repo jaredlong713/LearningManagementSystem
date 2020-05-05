@@ -11,82 +11,82 @@ using Microsoft.AspNet.Identity;
 
 namespace LMS.UI.MVC.Controllers
 {
-    public class CourseCompletionsController : Controller
+    public class LessonViewsController : Controller
     {
         private LearningManagementEntities db = new LearningManagementEntities();
 
-        // GET: CourseCompletions
+        // GET: LessonViews
         public ActionResult Index()
         {
-            dynamic courseCompletions = null;
-
+            var lessonViews = db.LessonViews.ToList();
             string user = User.Identity.GetUserId();
-
             if (User.IsInRole("Employee"))
             {
-                courseCompletions = db.CourseCompletions.Include(c => c.Course).Include(c => c.UserDetail).Where(x => x.UserId == user).OrderBy(c => c.DateCompleted).ToList();
-                ViewBag.NbrCompleted = courseCompletions.Count;
+                lessonViews = db.LessonViews.Where(lv => lv.UserId == user).ToList();
+
+            } else if (User.IsInRole("Admin") || User.IsInRole("HRAdmin") || User.IsInRole("Manager"))
+            {
+                lessonViews = db.LessonViews.ToList();
 
             } else
             {
-                courseCompletions = db.CourseCompletions.Include(c => c.UserDetail).Include(c => c.Course).OrderBy(c => c.UserId).OrderBy(c => c.DateCompleted).ToList();
+                return RedirectToAction("Index", "Home");
             }
-
-            return View(courseCompletions);
+            return View(lessonViews.ToList());
         }
 
-        // GET: CourseCompletions/Details/5
+
+        // GET: LessonViews/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            LessonView lessonView = db.LessonViews.Find(id);
 
-            CourseCompletion courseCompletion = db.CourseCompletions.Find(id);
+            string user = lessonView.UserId;
 
-            string user = courseCompletion.UserId;
-
-            var totalComplete = db.CourseCompletions.Include(c => c.Course).Include(c => c.UserDetail).Where(x => x.UserId == user).ToList();
+            var totalComplete = db.LessonViews.Include(c => c.Lesson).Include(c => c.UserDetail).Where(x => x.UserId == user).ToList();
             ViewBag.NbrCompleted = totalComplete.Count;
 
-            if (courseCompletion == null)
+            if (lessonView == null)
             {
                 return HttpNotFound();
             }
-            return View(courseCompletion);
+            return View(lessonView);
         }
 
-        // GET: CourseCompletions/Create
+        // GET: LessonViews/Create
         [Authorize(Roles = "HRAdmin, Admin")]
         public ActionResult Create()
         {
+            ViewBag.LessonId = new SelectList(db.Lessons, "LessonId", "LessonTitle");
             ViewBag.UserId = new SelectList(db.UserDetails, "UserId", "FirstName");
-            ViewBag.CourseId = new SelectList(db.Courses, "CourseId", "CourseName");
             return View();
         }
 
-        // POST: CourseCompletions/Create
+        // POST: LessonViews/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize(Roles = "HRAdmin, Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "CourseCompletionId,UserId,CourseId,DateCompleted")] CourseCompletion courseCompletion)
+        [Authorize(Roles = "HRAdmin, Admin")]
+        public ActionResult Create([Bind(Include = "LessonViewId,UserId,LessonId,DateViewed")] LessonView lessonView)
         {
             if (ModelState.IsValid)
             {
-                db.CourseCompletions.Add(courseCompletion);
+                db.LessonViews.Add(lessonView);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.UserId = new SelectList(db.UserDetails, "UserId", "FirstName", courseCompletion.UserId);
-            ViewBag.CourseId = new SelectList(db.Courses, "CourseId", "CourseName", courseCompletion.CourseId);
-            return View(courseCompletion);
+            ViewBag.LessonId = new SelectList(db.Lessons, "LessonId", "LessonTitle", lessonView.LessonId);
+            ViewBag.UserId = new SelectList(db.UserDetails, "UserId", "FirstName", lessonView.UserId);
+            return View(lessonView);
         }
 
-        // GET: CourseCompletions/Edit/5
+        // GET: LessonViews/Edit/5
         [Authorize(Roles = "HRAdmin, Admin")]
         public ActionResult Edit(int? id)
         {
@@ -94,36 +94,36 @@ namespace LMS.UI.MVC.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            CourseCompletion courseCompletion = db.CourseCompletions.Find(id);
-            if (courseCompletion == null)
+            LessonView lessonView = db.LessonViews.Find(id);
+            if (lessonView == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.UserId = new SelectList(db.UserDetails, "UserId", "FirstName", courseCompletion.UserId);
-            ViewBag.CourseId = new SelectList(db.Courses, "CourseId", "CourseName", courseCompletion.CourseId);
-            return View(courseCompletion);
+            ViewBag.LessonId = new SelectList(db.Lessons, "LessonId", "LessonTitle", lessonView.LessonId);
+            ViewBag.UserId = new SelectList(db.UserDetails, "UserId", "FirstName", lessonView.UserId);
+            return View(lessonView);
         }
 
-        // POST: CourseCompletions/Edit/5
+        // POST: LessonViews/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [Authorize(Roles = "HRAdmin, Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "CourseCompletionId,UserId,CourseId,DateCompleted")] CourseCompletion courseCompletion)
+        public ActionResult Edit([Bind(Include = "LessonViewId,UserId,LessonId,DateViewed")] LessonView lessonView)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(courseCompletion).State = EntityState.Modified;
+                db.Entry(lessonView).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.UserId = new SelectList(db.UserDetails, "UserId", "FirstName", courseCompletion.UserId);
-            ViewBag.CourseId = new SelectList(db.Courses, "CourseId", "CourseName", courseCompletion.CourseId);
-            return View(courseCompletion);
+            ViewBag.LessonId = new SelectList(db.Lessons, "LessonId", "LessonTitle", lessonView.LessonId);
+            ViewBag.UserId = new SelectList(db.UserDetails, "UserId", "FirstName", lessonView.UserId);
+            return View(lessonView);
         }
 
-        // GET: CourseCompletions/Delete/5
+        // GET: LessonViews/Delete/5
         [Authorize(Roles = "HRAdmin, Admin")]
         public ActionResult Delete(int? id)
         {
@@ -131,22 +131,22 @@ namespace LMS.UI.MVC.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            CourseCompletion courseCompletion = db.CourseCompletions.Find(id);
-            if (courseCompletion == null)
+            LessonView lessonView = db.LessonViews.Find(id);
+            if (lessonView == null)
             {
                 return HttpNotFound();
             }
-            return View(courseCompletion);
+            return View(lessonView);
         }
 
-        // POST: CourseCompletions/Delete/5
+        // POST: LessonViews/Delete/5
         [Authorize(Roles = "HRAdmin, Admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            CourseCompletion courseCompletion = db.CourseCompletions.Find(id);
-            db.CourseCompletions.Remove(courseCompletion);
+            LessonView lessonView = db.LessonViews.Find(id);
+            db.LessonViews.Remove(lessonView);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

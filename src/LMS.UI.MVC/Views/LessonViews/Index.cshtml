@@ -1,0 +1,65 @@
+﻿@model IEnumerable<LMS.DATA.EF.LessonView>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="bradcam_area breadcam_bg overlay2">
+    <h3>Lesson Views</h3>
+</div>
+
+<div class="container">
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.DateViewed)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Lesson.LessonTitle)
+            </th>
+            <th>
+                Employee
+            </th>
+            @if (User.IsInRole("Admin") || User.IsInRole("HRAdmin") || User.IsInRole("Manager"))
+            {
+                <th>
+                    Manage
+                </th>
+            }
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateViewed)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Lesson.LessonTitle)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserDetail.FirstName)
+                    @Html.DisplayFor(modelItem => item.UserDetail.LastName)
+                </td>
+                @if (User.IsInRole("Admin") || User.IsInRole("HRAdmin") || User.IsInRole("Manager"))
+                {
+                    <th>
+                        <a href="@Url.Action("Details", "LessonViews", new RouteValueDictionary(new { id = item.LessonViewId }))" class="genric-btn primary small">
+                            Details
+                        </a>
+                    </th>
+                }
+            </tr>
+        }
+
+    </table>
+    @if (User.IsInRole("Admin") || User.IsInRole("HRAdmin"))
+    {
+        <div class="col-xl-11">
+            <div class="text-center">
+                <a href="@Url.Action("Create", "LessonViews")" class="boxed_btn_rev">CREATE NEW</a>
+            </div>
+            <br /><br />
+        </div>
+    }
+</div>

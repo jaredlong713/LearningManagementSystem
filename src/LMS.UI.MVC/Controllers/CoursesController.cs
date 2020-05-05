@@ -46,6 +46,7 @@ namespace LMS.UI.MVC.Controllers
         }
 
         // GET: Courses/Create
+        [Authorize(Roles = "HRAdmin, Admin")]
         public ActionResult Create()
         {
             return View();
@@ -56,6 +57,7 @@ namespace LMS.UI.MVC.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "HRAdmin, Admin")]
         public ActionResult Create([Bind(Include = "CourseId,CourseName,CourseDescription,CourseTag,CourseTime,IsActive")] Course course, HttpPostedFileBase coursePhoto)
         {
             if (ModelState.IsValid)
@@ -88,6 +90,7 @@ namespace LMS.UI.MVC.Controllers
         }
 
         // GET: Courses/Edit/5
+        [Authorize(Roles = "HRAdmin, Admin")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -105,6 +108,7 @@ namespace LMS.UI.MVC.Controllers
         // POST: Courses/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "HRAdmin, Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "CourseId,CourseName,CourseDescription,CourseTag,CourseTime,IsActive")] Course course, HttpPostedFileBase coursePhoto)
@@ -139,6 +143,7 @@ namespace LMS.UI.MVC.Controllers
         }
 
         // GET: Courses/Delete/5
+        [Authorize(Roles = "HRAdmin, Admin")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -154,6 +159,7 @@ namespace LMS.UI.MVC.Controllers
         }
 
         // POST: Courses/Delete/5
+        [Authorize(Roles = "HRAdmin, Admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

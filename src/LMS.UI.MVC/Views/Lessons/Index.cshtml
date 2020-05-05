@@ -4,60 +4,59 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<div class="bradcam_area breadcam_bg overlay2">
+    <h3>Lessons</h3>
+</div>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.LessonTitle)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Introduction)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.VideoURL)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PdfFilename)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.IsActive)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Course.CourseName)
-        </th>
-        <th></th>
-    </tr>
+<div class="container">
+    @if (User.IsInRole("Admin") || User.IsInRole("HRAdmin"))
+    {
+        <br/>
+        <p>
+            <a href="@Url.Action("Create", "Lessons")" class="genric-btn primary-border circle">Create New</a>
+        </p>
+    }
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.LessonTitle)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsActive)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Course.CourseName)
+            </th>
+            @if (User.IsInRole("Admin") || User.IsInRole("HRAdmin"))
+            {
+                <th></th>
+                <th></th>
+            }
+        </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.LessonTitle)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Introduction)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.VideoURL)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PdfFilename)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IsActive)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Course.CourseName)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.LessonId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.LessonId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.LessonId })
-        </td>
-    </tr>
-}
-
-</table>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LessonTitle)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsActive)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Course.CourseName)
+                </td>
+                @if (User.IsInRole("Admin") || User.IsInRole("HRAdmin"))
+                {
+                    <td>
+                        <a href="@Url.Action("Edit", "Lessons", new RouteValueDictionary(new { id = item.LessonId }))" class="genric-btn info-border small">Edit</a>
+                        <a href="@Url.Action("Details", "Lessons", new RouteValueDictionary(new { id = item.LessonId }))" class="genric-btn info-border small">Details</a>
+                    </td>
+                    <td>
+                        <a href="@Url.Action("Delete", "Lessons", new RouteValueDictionary(new { id = item.LessonId }))" class="genric-btn danger-border small">Delete</a>
+                    </td>
+                }
+            </tr>
+        }
+    </table>
+</div>
