@@ -38,7 +38,7 @@ namespace LMS.UI.MVC.Controllers
                 string body = $"Message from {contact.Name}<br>" +
                     $"Email: {contact.Email}<br>Message: {contact.Message}";
 
-                MailMessage msg = new MailMessage("no-reply@jeffdemaranville.com", "Jaredlong713@gmail.com", "Learning Management System", body);
+                MailMessage msg = new MailMessage("no-reply@gmail.com", "Jaredlong713@gmail.com", "Learning Management System", body);
 
                 msg.IsBodyHtml = true;
 

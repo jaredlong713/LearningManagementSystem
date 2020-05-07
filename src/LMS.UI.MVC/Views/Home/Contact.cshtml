@@ -17,7 +17,7 @@
             <div class="col-lg-8">
                 @using (Html.BeginForm())
                 { 
-                    <form class="form-contact contact_form" action="contact_process.php" method="post" id="contactForm" novalidate="novalidate">
+                    <form class="form-contact contact_form" method="post" id="contactForm" novalidate="novalidate">
                         @Html.AntiForgeryToken()
                         <div class="row">
                             <div class="col-sm-6">
